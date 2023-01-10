@@ -20,7 +20,7 @@ services:
     restart: always
     # map current folder into container location, not a real volume
     volumes:
-      - ./logstash/:/logstash_dir
+      - ./:/logstash_dir
     # fetch config from mapped folder above
     command: logstash -f /logstash_dir/logstash.conf
     depends_on:
