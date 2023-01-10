@@ -2,7 +2,7 @@
 
 #### This is a elastic search stack built with docker compose, it consists of Elastic Search, Kibana and Logstash.
 
-1. Before you build your container wither docker compose, please create a /tmp folder at your root location if not there already.
+1. Before you build your container with docker compose, please create a /tmp folder at your root location if not there already.
 
 2. Put your input data into this root/tmp folder and rename it as input.log, alternatively, you can put the input data into this folder and change the filename in logstash.conf.
 
