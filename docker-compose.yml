@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   Elasticsearch:
@@ -6,13 +6,13 @@ services:
     container_name: elasticsearch
     restart: always
     volumes:
-    - elastic_data:/usr/share/elasticsearch/data/
+      - elastic_data:/usr/share/elasticsearch/data/
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      discovery.type: single-node    
+      discovery.type: single-node
     ports:
-    - '9200:9200'
-    - '9300:9300'
+      - "9200:9200"
+      - "9300:9300"
     networks:
       - elk
 
@@ -22,33 +22,31 @@ services:
     restart: always
     # map current folder into container location, not a real volume
     volumes:
-    - ./logstash/:/logstash_dir
+      - ./logstash/:/logstash_dir
     # fetch config from mapped folder above
-    command: logstash -f /logstash_dir/logstash.conf 
+    command: logstash -f /logstash_dir/logstash.conf
     depends_on:
       - Elasticsearch
     ports:
-    - '9600:9600'
+      - "9600:9600"
     environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"    
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
       - elk
 
   Kibana:
     image: kibana:7.17.8
     container_name: kibana
-    restart: always       
+    restart: always
     ports:
-    - '5601:5601'
+      - "5601:5601"
     depends_on:
-      - Elasticsearch  
+      - Elasticsearch
     networks:
       - elk
 
 volumes:
-  elastic_data: 
-    external: true
-    name: elastic_data
+  elastic_data:
 
 networks:
   elk:
