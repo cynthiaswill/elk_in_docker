@@ -1,9 +1,8 @@
 version: "3.8"
 
 services:
-  Elasticsearch:
+  elasticsearch:
     image: elasticsearch:7.17.8
-    container_name: elasticsearch
     restart: always
     volumes:
       - elastic_data:/usr/share/elasticsearch/data/
@@ -14,30 +13,25 @@ services:
       - "9200:9200"
       - "9300:9300"
 
-  Logstash:
-    image: logstash:7.17.8
-    container_name: logstash
+  logstash:
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
-    # map current folder into container location, not a real volume
-    volumes:
-      - ./:/logstash_dir
-    # fetch config from mapped folder above
-    command: logstash -f /logstash_dir/logstash.conf
     depends_on:
-      - Elasticsearch
+      - elasticsearch
     ports:
       - "9600:9600"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
 
-  Kibana:
+  kibana:
     image: kibana:7.17.8
-    container_name: kibana
     restart: always
     ports:
       - "5601:5601"
     depends_on:
-      - Elasticsearch
+      - elasticsearch
 
 volumes:
   elastic_data:
