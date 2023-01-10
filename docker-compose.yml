@@ -13,8 +13,6 @@ services:
     ports:
       - "9200:9200"
       - "9300:9300"
-    networks:
-      - elk
 
   Logstash:
     image: logstash:7.17.8
@@ -31,8 +29,6 @@ services:
       - "9600:9600"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    networks:
-      - elk
 
   Kibana:
     image: kibana:7.17.8
@@ -42,8 +38,6 @@ services:
       - "5601:5601"
     depends_on:
       - Elasticsearch
-    networks:
-      - elk
 
 volumes:
   elastic_data:
